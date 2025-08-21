@@ -47,37 +47,33 @@ This project is a complete **Student Depression Prediction System** that combine
 GRP12_BCS206_StudentDepression/
 │
 ├── 📊 data/
-│   ├── raw/
-│   │   └── student_depression_dataset.csv    # 27,901 student records
-│   └── processed/
-│       └── .gitkeep
+│   └── student_depression_dataset.csv      # 27,901 student records
 │
-├── 📓 model.ipynb                           # Complete ML pipeline notebook
+├── 📓 model.ipynb                          # Complete ML pipeline notebook
 │
-├── 🌐 web_app/                             # Complete web application
-│   ├── app.py                              # Flask backend server
-│   ├── index.html                          # Frontend interface
-│   ├── styles.css                          # Modern styling
-│   ├── script.js                           # Interactive functionality
-│   ├── train_model.py                      # Model training script
-│   └── model_components.pkl                # Trained model & preprocessors
+├── 🌐 web_app/                            # Complete web application
+│   ├── app.py                             # Flask backend server
+│   ├── index.html                         # Frontend interface
+│   ├── styles.css                         # Modern styling
+│   ├── script.js                          # Interactive functionality
+│   ├── train_model.py                     # Model training script
+│   └── model_components.pkl               # Trained model & preprocessors
 │
 ├── 📈 results/
-│   ├── plots/
-│   │   └── PERFORMANCE_METRICS.png
-│   ├── metrics/
-│   └── model_outputs/
+│   └── metrics/
+│       ├── .gitkeep
+│       └── PERFORMANCE_METRICS.png        # Model performance visualization
 │
 ├── 📚 docs/
 │   ├── images/
-│   │   ├── distribution_diagrams.png
-│   │   └── model_architecture.png
-│   └── report_unformatted.docx
-│   └── Comparison_with_State-of-the-Art_Models.docx
+│   │   ├── distribution_diagrams.png      # Data distribution charts
+│   │   └── model_architecture.png         # ML architecture diagram
+│   ├── report_unformatted.docx           # Project report
+│   └── Comparison_with_State-of-the-Art_Models.docx  # Benchmarking analysis
 │
-├── 🔧 requirements.txt                      # Python dependencies
-├── 🚫 .gitignore
-└── 📖 README.md                            # This comprehensive guide
+├── 🔧 requirements.txt                     # Python dependencies
+├── 🚫 .gitignore                          # Git ignore rules
+└── 📖 README.md                           # This comprehensive guide
 ```
 
 ---
