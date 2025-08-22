@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """
-Student Depression Model Training Script
-Based on the exact architecture and preprocessing from model.ipynb
+Student Depression Model Training
 """
 
 import pandas as pd

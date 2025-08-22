@@ -59,10 +59,10 @@ class StudentDepressionPredictor:
             
             # Create a data dictionary matching the model's expected format
             processed_data = {
-                'id': 1,  # Dummy ID - will be consistent with training
+                'id': 1,  # Dummy ID 
                 'Gender': form_data.get('gender', 'Male'),
                 'Age': float(form_data.get('age', 25)),
-                'City': form_data.get('city', 'Mumbai'),  # Use a common city from training
+                'City': form_data.get('city', 'Mumbai'),
                 'Profession': form_data.get('profession', 'Student'),
                 'Academic Pressure': float(form_data.get('academicPressure', 2.5)),
                 'Work Pressure': float(form_data.get('workPressure', 0)),
