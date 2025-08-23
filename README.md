@@ -260,7 +260,74 @@ warnings==0.1.0
 ├── 👥 K-Nearest Neighbors (k=5)
 └── 📊 Gaussian Naive Bayes
 ```
+---
+### 📈 Base Models Rationale:
+1. **Random Forest (rf)**
 
+Strength: Excellent at handling complex feature interactions and non-linear relationships
+Why for depression data: Can capture subtle patterns between multiple psychological/behavioral indicators
+Contribution: Provides robust predictions and handles missing values well
+
+2. **Support Vector Machine (svm)**
+
+Strength: Finds optimal decision boundaries, especially effective in high-dimensional spaces
+Why for depression data: Good at separating complex classes when features have intricate relationships
+Contribution: Adds geometric perspective to the ensemble
+
+3. **Gradient Boosting (gb)**
+
+Strength: Sequential learning that corrects previous models' mistakes
+Why for depression data: Excellent at capturing subtle patterns that other models might miss
+Contribution: Focuses on difficult-to-classify cases (borderline depression symptoms)
+
+4. **K-Nearest Neighbors (knn)**
+
+Strength: Instance-based learning that finds similar cases
+Why for depression data: Students with similar profiles likely have similar mental health outcomes
+Contribution: Provides local decision-making perspective
+
+5. **Naive Bayes (nb)**
+
+Strength: Probabilistic approach assuming feature independence
+Why for depression data: Fast, interpretable, and works well with categorical features
+Contribution: Adds probabilistic baseline and handles class imbalances well
+
+## 🏗️ Why This Ensemble Works for Depression Prediction:
+### Diversity Principle
+Each algorithm approaches the problem differently:
+
+### Tree-based (RF, GB): Feature interactions and splits
+Distance-based (KNN): Similarity matching
+Probabilistic (NB): Statistical relationships
+Geometric (SVM): Optimal boundaries
+
+### Complementary Strengths
+
+RF handles feature interactions → GB corrects residual errors → SVM finds optimal boundaries → KNN adds local context → NB provides probabilistic baseline
+
+### Meta-Model Choice (Logistic Regression)
+
+Why Logistic Regression: Simple, interpretable, and prevents overfitting
+Role: Learns optimal weights for combining base model predictions
+Advantage: Won't overfit to the meta-features from base models
+
+### Benefits for Student Depression Dataset:
+
+Robustness: Multiple models reduce risk of any single model's bias
+Feature Handling: Different models handle different feature types effectively
+Pattern Recognition: Captures both linear and non-linear depression indicators
+Uncertainty Quantification: predict_proba provides confidence estimates
+Generalization: Cross-validation (cv=5) ensures models don't overfit
+
+### Technical Advantages
+
+**stack_method='predict_proba':** Uses probability distributions rather than hard predictions, providing richer information to the meta-model
+**cv=5:** Prevents data leakage and ensures meta-features are generated on unseen data
+Stratified split: Maintains class balance between training/testing
+
+This ensemble is particularly suited for depression prediction because mental health classification often involves subtle, multi-faceted patterns that no single algorithm can capture completely. The stacking approach allows the meta-model to learn the optimal way to combine these different perspectives for more accurate and reliable predictions.
+
+---
 ### 📈 Model Performance
 
 | Metric | Score | Description |
