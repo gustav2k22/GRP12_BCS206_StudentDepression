@@ -329,6 +329,168 @@ This ensemble is particularly suited for depression prediction because mental he
 
 ---
 ### 📈 Model Performance
+# Confusion Matrix and Evaluation Metrics Formulas
+
+## Confusion Matrix Structure
+
+For a binary classification problem (like depression prediction), the confusion matrix is a 2×2 table:
+
+```
+                    Predicted
+                 Positive  Negative
+Actual Positive    TP      FN
+Actual Negative    FP      TN
+```
+
+Where:
+- **TP (True Positives)**: Correctly predicted positive cases (depressed students correctly identified)
+- **TN (True Negatives)**: Correctly predicted negative cases (non-depressed students correctly identified)
+- **FP (False Positives)**: Incorrectly predicted positive cases (non-depressed students incorrectly labeled as depressed)
+- **FN (False Negatives)**: Incorrectly predicted negative cases (depressed students missed/not identified)
+
+## Core Performance Metrics
+
+### 1. Accuracy
+**Formula:**
+```
+Accuracy = (TP + TN) / (TP + TN + FP + FN)
+```
+**Interpretation:** Overall correctness - proportion of correct predictions among total predictions
+**Range:** [0, 1] where 1 is perfect accuracy
+
+### 2. Precision (Positive Predictive Value)
+**Formula:**
+```
+Precision = TP / (TP + FP)
+```
+**Interpretation:** Of all positive predictions, how many were actually correct
+**Clinical meaning:** Of students predicted to be depressed, what percentage actually are depressed
+**Range:** [0, 1] where 1 means no false positives
+
+### 3. Recall (Sensitivity/True Positive Rate)
+**Formula:**
+```
+Recall = TP / (TP + FN)
+```
+**Interpretation:** Of all actual positive cases, how many were correctly identified
+**Clinical meaning:** Of all depressed students, what percentage were correctly identified
+**Range:** [0, 1] where 1 means no false negatives
+
+### 4. Specificity (True Negative Rate)
+**Formula:**
+```
+Specificity = TN / (TN + FP)
+```
+**Interpretation:** Of all actual negative cases, how many were correctly identified
+**Clinical meaning:** Of all non-depressed students, what percentage were correctly identified
+**Range:** [0, 1] where 1 means no false positives
+
+### 5. F1-Score (Harmonic Mean of Precision and Recall)
+**Formula:**
+```
+F1-Score = 2 × (Precision × Recall) / (Precision + Recall)
+```
+**Alternative Formula:**
+```
+F1-Score = 2TP / (2TP + FP + FN)
+```
+**Interpretation:** Balanced measure considering both precision and recall
+**Range:** [0, 1] where 1 is perfect F1 score
+
+## Advanced Metrics
+
+### 6. False Positive Rate (FPR)
+**Formula:**
+```
+FPR = FP / (FP + TN) = 1 - Specificity
+```
+**Interpretation:** Rate of incorrectly classifying negative cases as positive
+
+### 7. False Negative Rate (FNR)
+**Formula:**
+```
+FNR = FN / (FN + TP) = 1 - Recall
+```
+**Interpretation:** Rate of missing positive cases
+
+### 8. Matthews Correlation Coefficient (MCC)
+**Formula:**
+```
+MCC = (TP × TN - FP × FN) / √[(TP + FP)(TP + FN)(TN + FP)(TN + FN)]
+```
+**Interpretation:** Correlation between predicted and actual classifications
+**Range:** [-1, 1] where 1 is perfect prediction, 0 is random, -1 is completely wrong
+
+## Probabilistic Metrics
+
+### 9. Log-Loss (Cross-Entropy Loss)
+**Formula:**
+```
+Log-Loss = -(1/N) × Σ[yi × log(pi) + (1-yi) × log(1-pi)]
+```
+Where:
+- N = number of samples
+- yi = actual label (0 or 1)
+- pi = predicted probability for class 1
+
+**Interpretation:** Penalizes confident wrong predictions more heavily
+
+### 10. ROC-AUC (Area Under ROC Curve)
+The ROC curve plots True Positive Rate vs False Positive Rate at various thresholds:
+- **TPR = Recall = TP/(TP+FN)**
+- **FPR = FP/(FP+TN)**
+
+**AUC Interpretation:**
+- 0.5 = Random classifier
+- 0.7-0.8 = Acceptable
+- 0.8-0.9 = Excellent
+- 0.9+ = Outstanding
+
+## Multi-Class Extensions
+
+For multi-class problems, these metrics can be calculated using:
+
+### Macro Average
+```
+Macro-Average = (1/K) × Σ(metric for each class)
+```
+
+### Micro Average
+```
+Micro-Average = Σ(TP across all classes) / Σ(TP + FP across all classes)
+```
+
+### Weighted Average
+```
+Weighted-Average = Σ(metric × class_support) / total_support
+```
+
+## Practical Application in Your Code
+
+In your ensemble model code, these metrics are calculated as:
+
+```python
+# Basic metrics
+accuracy = accuracy_score(y_test, y_pred)              # (TP+TN)/(TP+TN+FP+FN)
+precision = precision_score(y_test, y_pred)           # TP/(TP+FP)
+recall = recall_score(y_test, y_pred)                 # TP/(TP+FN)
+f1 = f1_score(y_test, y_pred)                         # 2×(precision×recall)/(precision+recall)
+
+# Probabilistic metrics
+auc = roc_auc_score(y_test, y_pred_proba)             # Area under ROC curve
+log_loss_val = log_loss(y_test, y_pred_proba)         # Cross-entropy loss
+
+# Confusion matrix elements
+cm = confusion_matrix(y_test, y_pred)
+tn, fp, fn, tp = cm.ravel()
+```
+
+## Important Considerations for Depression Prediction
+
+1. **Class Imbalance**: If depression cases are rare, accuracy can be misleading
+2. **Clinical Priority**: In healthcare, minimizing False Negatives (missed depression cases) is often more important than False Positives
+3. **Threshold Selection**: Adjust classification threshold based on clinical requirements
+4. **Cross-Validation**: Use stratified CV to maintain class balance across folds
 
 | Metric | Score | Description |
 |--------|-------|-------------|
