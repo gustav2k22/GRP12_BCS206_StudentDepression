@@ -48,8 +48,8 @@ class StudentDepressionPredictor:
                 raise FileNotFoundError(f"Model file {model_path} not found")
         except Exception as e:
             print(f"❌ Error loading model: {e}")
-            print("Please ensure model_components.pkl exists and run train_model.py if needed")
-            raise
+            print("⚠️  Falling back to rule-based prediction system")
+            self.model_loaded = False
     
     def preprocess_input(self, form_data):
         """Preprocess form data to match model input format"""
@@ -117,10 +117,11 @@ class StudentDepressionPredictor:
             raise
     
     def predict(self, form_data):
-        """Make prediction based on form data using the actual trained model"""
+        """Make prediction based on form data using ML model or fallback to rule-based"""
         try:
             if not self.model_loaded:
-                raise ValueError("Model not loaded properly")
+                print("🔄 Using rule-based prediction system")
+                return self.rule_based_prediction(form_data)
             
             # Preprocess the input
             processed_df = self.preprocess_input(form_data)
@@ -165,15 +166,8 @@ class StudentDepressionPredictor:
             return prediction_result
             
         except Exception as e:
-            print(f"Error in prediction: {e}")
-            print(f"Form data: {form_data}")
-            return {
-                'risk_level': 'moderate',
-                'probability': 50,
-                'confidence': 0.6,
-                'risk_factors': ['Unable to process inputs with trained model'],
-                'error': str(e)
-            }
+            print(f"Error in ML prediction, falling back to rule-based: {e}")
+            return self.rule_based_prediction(form_data)
     
     def analyze_risk_factors(self, data):
         """Analyze form data to identify specific risk factors"""
